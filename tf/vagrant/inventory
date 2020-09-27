@@ -1,0 +1,5 @@
+[local]
+localhost ansible_connection=local
+
+[vault_instances]
+localhost ansible_connection=local

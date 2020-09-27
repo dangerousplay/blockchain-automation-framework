@@ -46,21 +46,9 @@
 
 - name: Setup tiller
   shell: |
-    KUBECONFIG={{ kubeconfig_path }} helm init --history-max 200 --service-account tiller --kube-context {{ kubecontext }}
+    KUBECONFIG={{ kubeconfig_path }} helm init --service-account tiller --kube-context {{ kubecontext }}
     KUBECONFIG={{ kubeconfig_path }} helm repo update
   when: tiller_status.resources|length == 0
   tags:
     - molecule-idempotence-notest
 
-- name: Wait for tiller to be ready
-  include_role:
-    name: "check/helm_component"
-  vars:
-    component_type: "Pod"
-    namespace: kube-system
-    component_name: "helm"
-    label_selectors:
-      - app = {{ component_name }}
-    kubernetes:
-      config_file: "{{ kubeconfig_path }}"
-      context: "{{ kubecontext }}"

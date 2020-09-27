@@ -11,3 +11,4 @@ This section introduces the key concepts along with their features used within t
    keyConcepts/vault.md
    keyConcepts/gitops.md
    keyConcepts/features.md
+   keyConcepts/jenkins.md

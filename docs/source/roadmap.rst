@@ -83,7 +83,7 @@ Platforms
 ---------
 
 -  |run| Besu network provisioning
--  |tick| Support for R3 Corda Enterprise Version
+-  |pin| Support for R3 Corda Enterprise Version
 -  |tick| Hyperledger Indy network provisioning
 -  |tick| Quorum network provisioning
 -  |tick| Support for Hyperledger Fabric v2.0

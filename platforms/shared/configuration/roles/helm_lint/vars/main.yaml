@@ -17,8 +17,6 @@ charts:
   nms: nms
   mongodb: mongodb
   doorman: doorman
-  notarydb: h2
-  nodedb: h2
   db: h2
   notaryjob: notary-initial-registration
   nodejob: node-initial-registration
@@ -37,5 +35,3 @@ charts:
   bridge: bridge
   float: float
   node_registration: node-initial-registration
-  cli: fabric_cli
-  node: node

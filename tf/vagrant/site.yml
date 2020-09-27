@@ -1,0 +1,13 @@
+---
+- name: Install Vault Vagrant Development Server
+  hosts: all
+  any_errors_fatal: true
+  become: true
+  become_user: root
+  vars:
+    vault_backend: file
+    vault_cluster_disable: True
+    vault_log_level: debug
+    vault_port: 8200
+  roles:
+    - {role: ansible-community.ansible-vault}

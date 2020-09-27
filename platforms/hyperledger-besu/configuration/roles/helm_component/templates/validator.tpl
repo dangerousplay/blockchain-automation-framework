@@ -38,6 +38,7 @@ spec:
       external_url: {{ name }}.{{ external_url }}
       p2p: {{ peer.p2p.ambassador }}
       rpc: {{ peer.rpc.ambassador }}
+      ws: {{ peer.ws.ambassador }}
 
     images:
       node: hyperledger/besu:{{ network.version }}
@@ -45,7 +46,6 @@ spec:
 
     node:
       name: {{ peer.name }}
-      tls: {{ network.config.tm_tls }}
       consensus: {{ consensus }}
       mountPath: /etc/genesis
       servicetype: ClusterIP
@@ -64,7 +64,6 @@ spec:
       secretprefix: secret/{{ component_ns }}/crypto/{{ peer.name }}
       serviceaccountname: vault-auth
       keyname: data
-      tlsdir: tls
       role: vault-role
       authpath: besu{{ name }}
 
