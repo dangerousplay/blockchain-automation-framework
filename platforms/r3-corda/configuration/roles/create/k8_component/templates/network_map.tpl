@@ -1,4 +1,4 @@
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: {{ component_name }}
@@ -81,4 +81,3 @@ spec:
       annotations: {}
     ambassador:
       external_url_suffix: {{item.external_url_suffix}}
-      
