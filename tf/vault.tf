@@ -6,6 +6,7 @@ locals {
 
 //hashicorp/vault
 resource "docker_container" "vault" {
+  count = terraform.workspace == "default" ? 1 : 0
   name  = "vault"
   image = "vault:1.5.4"
   env = ["VAULT_DEV_ROOT_TOKEN_ID=${local.VAULT_DEV_ROOT_TOKEN}", "VAULT_LOG_LEVEL=debug"]
@@ -21,7 +22,7 @@ output "vault_root_token" {
 }
 
 output "vault_host" {
-  value = docker_container.vault.ip_address
+  value = terraform.workspace == "default" ? docker_container.vault[0].ip_address : ""
 }
 
 output "vault_port" {
