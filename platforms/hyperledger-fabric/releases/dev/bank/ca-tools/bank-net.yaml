@@ -1,0 +1,29 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: bank-net-ca-tools
+  namespace: bank-net
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: bank-net-ca-tools
+  chart:
+    git: ssh://git@github.com/dangerousplay/blockchain-automation-framework.git
+    ref: local
+    path: platforms/hyperledger-fabric/charts/catools
+  values:
+    metadata:
+      namespace: bank-net
+      name: ca-tools
+
+    replicaCount: 1
+
+    image:
+      repository: hyperledger/fabric-ca-tools
+      tag: 1.2.0
+      pullPolicy: IfNotPresent
+      
+    storage:
+      storageclassname: banksc
+      storagesize: 512Mi
+
