@@ -1,0 +1,29 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: hcards-net-ca-tools
+  namespace: hcards-net
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: hcards-net-ca-tools
+  chart:
+    git: ssh://git@github.com/dangerousplay/blockchain-automation-framework.git
+    ref: local
+    path: platforms/hyperledger-fabric/charts/catools
+  values:
+    metadata:
+      namespace: hcards-net
+      name: ca-tools
+
+    replicaCount: 1
+
+    image:
+      repository: hyperledger/fabric-ca-tools
+      tag: 1.2.0
+      pullPolicy: IfNotPresent
+      
+    storage:
+      storageclassname: hcardssc
+      storagesize: 512Mi
+
