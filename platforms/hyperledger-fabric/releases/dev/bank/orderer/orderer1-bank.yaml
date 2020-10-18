@@ -1,0 +1,54 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: bank-orderer1
+  namespace: bank-net
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: bank-orderer1
+  chart:
+    git: ssh://git@github.com/dangerousplay/blockchain-automation-framework.git
+    ref: local
+    path: platforms/hyperledger-fabric/charts/orderernode
+  values:
+    metadata:
+      namespace: bank-net
+      images:
+        orderer: hyperledger/fabric-orderer:1.4.4
+        alpineutils: index.docker.io/hyperledgerlabs/alpine-utils:1.0
+
+    orderer:
+      name: orderer1
+      loglevel: info
+      localmspid: bankMSP
+      tlsstatus: true
+      keepaliveserverinterval: 10s
+    
+    consensus:
+      name: raft
+
+    storage:
+      storageclassname: banksc
+      storagesize: 512Mi  
+
+    service:
+      servicetype: ClusterIP
+      ports:
+        grpc:
+          clusteripport: 7050
+
+    vault:
+      address: http://172.80.0.2:8200
+      role: vault-role
+      authpath: bank-net-auth
+      secretprefix: secret/crypto/ordererOrganizations/bank-net/orderers/orderer1.bank-net
+      imagesecretname: regcred
+      serviceaccountname: vault-auth
+
+    proxy:
+      provider: haproxy
+      external_url_suffix: develop.local.com
+
+    genesis: |-
+      
