@@ -18,3 +18,9 @@ resource "helm_repository" "stable" {
   name = "stable"
   url = "https://kubernetes-charts.storage.googleapis.com/"
 }
+
+resource "helm_release" "prometheus-operator" {
+  chart = "prometheus-community/kube-prometheus-stack"
+  name = "prometheus"
+  values = []
+}
