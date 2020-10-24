@@ -151,9 +151,9 @@ spec:
 
           # Get dependencies
           mkdir -p $GOPATH/bin && curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-          cd $GOPATH/src/github.com/chaincode && dep ensure
+          cd $GOPATH/src/github.com/chaincode
           ## Installing chaincode on a peer
-          peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -p github.com/chaincode/${CHAINCODE_NAME}/${CHAINCODE_MAINDIR}
+          peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -l ${CHAINCODE_TECHNOLOGY} -p github.com/chaincode/${CHAINCODE_NAME}/${CHAINCODE_MAINDIR}
         env:
         - name: CORE_VM_ENDPOINT
           value: unix:///host/var/run/docker.sock
@@ -183,6 +183,8 @@ spec:
           value: "{{ $.Values.chaincode.version }}"
         - name: CORE_CHAINCODE_BUILDER
           value: "{{ $.Values.chaincode.builder }}"
+        - name: CHAINCODE_TECHNOLOGY
+          value: "{{ $.Values.chaincode.technology }}"
         volumeMounts:
         - name: certificates
           mountPath: /opt/gopath/src/github.com/hyperledger/fabric/crypto

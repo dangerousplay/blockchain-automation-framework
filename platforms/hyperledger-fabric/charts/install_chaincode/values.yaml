@@ -83,7 +83,8 @@ chaincode:
   version:
   #Provide the path to the main.go package if it is different from chaincode directory
   #Eg. maindirectory: cmd
-  maindirectory: 
+  maindirectory:
+  technology:
   repository:
     #Provide the chaincode remote git repository hostname
     #Eg. hostname: innersource.accenture.com
