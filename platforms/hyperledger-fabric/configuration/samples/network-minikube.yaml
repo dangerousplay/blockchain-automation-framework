@@ -4,7 +4,7 @@ network:
   # Network level configuration specifies the attributes required for each organization
   # to join an existing network.
   type: fabric
-  version: 1.4.4                 # currently tested 1.4.0 and 1.4.4
+  version: 2.0.0                # currently tested 1.4.0 and 1.4.4
 
   #Environment section for Kubernetes setup
   env:
@@ -86,12 +86,12 @@ network:
       k8s:
         region: "cluster_region"
         context: "minikube"
-        config_file: "/home/blockchain-automation-framework/build/config"
+        config_file: "/home/davi/IdeaProjects/sicredi/blockchain-automation-framework/build/kubeconfig.yaml"
 
       # Hashicorp Vault server address and root-token. Vault should be unsealed.
       # Do not check-in root_token
       vault:
-        url: "vault_url"
+        url: "http://vault"
         root_token: "vault_root_token"
 
       # Git Repo details which will be used by GitOps/Flux.
@@ -105,7 +105,7 @@ network:
         username: "github_username"          # Git user who has rights to check-in in all branches
         password: "github_token"          # Git Server user password or token
         email: "github_email"                # Email to use in git config
-        private_key: "/home/blockchain-automation-framework/build/gitops"          # Path to private key file which has write-access to the git repo
+        private_key: "/home/davi/IdeaProjects/sicredi/blockchain-automation-framework/build/gitops"          # Path to private key file which has write-access to the git repo
      
       # Services maps to the pods that will be deployed on the k8s cluster
       # This sample is an orderer service and includes a zk-kafka consensus
@@ -155,12 +155,12 @@ network:
       k8s:
         region: "cluster_region"
         context: "minikube"
-        config_file: "/home/blockchain-automation-framework/build/config"
+        config_file: "/home/davi/IdeaProjects/sicredi/blockchain-automation-framework/build/kubeconfig.yml"
 
       # Hashicorp Vault server address and root-token. Vault should be unsealed.
       # Do not check-in root_token
       vault:
-        url: "vault_url"
+        url: "http://vault"
         root_token: "vault_root_token"
 
       # Git Repo details which will be used by GitOps/Flux.
@@ -174,7 +174,7 @@ network:
         username: "github_username"          # Git user who has rights to check-in in all branches
         password: "github_token"          # Git Server user password or token
         email: "github_email"                # Email to use in git config
-        private_key: "/home/blockchain-automation-framework/build/gitops"          # Path to private key file which has write-access to the git repo
+        private_key: "/home/davi/IdeaProjects/sicredi/blockchain-automation-framework/build/gitops"          # Path to private key file which has write-access to the git repo
 
       # The participating nodes are peers
       # This organization hosts it's own CA server
@@ -189,8 +189,7 @@ network:
         - peer:
           name: peer0          
           type: anchor    # This can be anchor/nonanchor. Atleast one peer should be anchor peer.         
-          gossippeeraddress: peer0.manufacturer-net:7051 # Internal Address of the other peer in same Org for gossip, same peer if there is only one peer  
-          cli: disabled        # Creates a peer cli pod depending upon the (enabled/disabled) tag. 
+          gossippeeraddress: peer0.manufacturer-net:7051 # Internal Address of the other peer in same Org for gossip, same peer if there is only one peer          
           grpc:
             port: 7051         
           events:
@@ -236,12 +235,12 @@ network:
       k8s:
         region: "cluster_region"
         context: "minikube"
-        config_file: "/home/blockchain-automation-framework/build/config"
+        config_file: "/home/davi/IdeaProjects/sicredi/blockchain-automation-framework/build/kubeconfig.yml"
 
       # Hashicorp Vault server address and root-token. Vault should be unsealed.
       # Do not check-in root_token
       vault:
-        url: "vault_url"
+        url: "http://vault"
         root_token: "vault_root_token"
 
       # Git Repo details which will be used by GitOps/Flux.
@@ -255,7 +254,7 @@ network:
         username: "github_username"          # Git user who has rights to check-in in all branches
         password: "github_token"          # Git Server user password or token
         email: "github_email"                # Email to use in git config
-        private_key: "/home/blockchain-automation-framework/build/gitops"          # Path to private key file which has write-access to the git repo
+        private_key: "/home/davi/IdeaProjects/sicredi/blockchain-automation-framework/build/gitops"          # Path to private key file which has write-access to the git repo
 
       services:
         ca:
@@ -269,7 +268,6 @@ network:
           name: peer0          
           type: anchor    # This can be anchor/nonanchor. Atleast one peer should be anchor peer.    
           gossippeeraddress: peer0.carrier-net:7051 # Internal Address of the other peer in same Org for gossip, same peer if there is only one peer          
-          cli: disabled     # Creates a peer cli pod depending upon the (enabled/disabled) tag. 
           grpc:
             port: 7051         
           events:

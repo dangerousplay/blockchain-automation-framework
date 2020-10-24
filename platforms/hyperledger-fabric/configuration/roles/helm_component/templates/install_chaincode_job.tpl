@@ -1,4 +1,4 @@
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: {{ component_name }}
@@ -40,6 +40,7 @@ spec:
       name: {{ component_chaincode.name | lower | e }}
       version: {{ component_chaincode.version }}
       maindirectory: {{ component_chaincode.maindirectory }}
+      technology: {{ component_chaincode.technology }}
       repository:
         hostname: "{{ component_chaincode.repository.url.split('/')[0] | lower }}"
         git_username: "{{ component_chaincode.repository.username}}"
