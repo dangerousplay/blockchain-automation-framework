@@ -15,6 +15,7 @@
 'use strict';
 
 const { WorkloadModuleBase } = require('@hyperledger/caliper-core');
+const { loadSync } = require('protobufjs');
 
 /**
  * Workload module for the benchmark round.
@@ -28,6 +29,7 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
         super();
         this.contractId = '';
         this.contractVersion = '';
+        this.protobuf = loadSync("../proto/cards-contract.proto")
     }
 
     /**

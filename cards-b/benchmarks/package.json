@@ -1,4 +1,7 @@
 {
   "devDependencies": {},
-  "scripts": {}
+  "scripts": {},
+  "dependencies": {
+    "protobufjs": "^6.10.1"
+  }
 }
