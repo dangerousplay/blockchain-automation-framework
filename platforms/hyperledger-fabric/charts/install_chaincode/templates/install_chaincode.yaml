@@ -145,6 +145,8 @@ spec:
           git_password=$(cat /opt/gopath/src/github.com/hyperledger/fabric/crypto/user_cred)
           cd /tmp && git clone https://{{ $.Values.chaincode.repository.git_username }}:$git_password@{{ $.Values.chaincode.repository.url }} -b {{ $.Values.chaincode.repository.branch }} chaincode
 
+          mkdir -p $GOPATH/src/github.com/chaincode/
+
           cp -R /tmp/chaincode/{{ $.Values.chaincode.repository.path }}/* $GOPATH/src/github.com/chaincode/
 
           cd $GOPATH/src/github.com/chaincode/
