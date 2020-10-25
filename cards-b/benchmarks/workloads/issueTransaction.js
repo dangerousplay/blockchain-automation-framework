@@ -77,18 +77,20 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
 }
         * */
 
+        const amount = faker.finance.amount()
+
         const request = this.CardIssueRequest.create({
             authTransactionType: "",
             plasticId: "",
-            accountId: 0,
+            accountId: faker.finance.account(),
             merchantName: faker.company.companyName(),
             merchantCity: faker.address.city(),
-            issuerAmount: "",
-            acquirerAmount: "",
+            issuerAmount: amount.toString(),
+            acquirerAmount: faker.finance.amount(0, amount).toString(),
             iofAmount: "",
             transactionProcessingType: "",
             national: true,
-            lastDigits: "",
+            lastDigits: faker.finance.creditCardNumber(),
             issuerCurrencyCode: faker.finance.currencyCode(),
             acquirerCurrencyCode: faker.finance.currencyCode()
         });
