@@ -77,7 +77,21 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
 }
         * */
 
-        const request = this.CardIssueRequest.create({});
+        const request = this.CardIssueRequest.create({
+            authTransactionType: "",
+            plasticId: "",
+            accountId: 0,
+            merchantName: faker.company.companyName(),
+            merchantCity: faker.address.city(),
+            issuerAmount: "",
+            acquirerAmount: "",
+            iofAmount: "",
+            transactionProcessingType: "",
+            national: true,
+            lastDigits: "",
+            issuerCurrencyCode: faker.finance.currencyCode(),
+            acquirerCurrencyCode: faker.finance.currencyCode()
+        });
 
         const bytes = this.CardIssueRequest.encode(request).finish();
 
