@@ -127,6 +127,13 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
         }
         * */
 
+        const request = this.CreateCardPlastic.create({
+            accountNumber: faker.finance.account(),
+            embossingName: faker.name
+        })
+
+        const bytes = this.CreateCardPlastic.encode(request)
+
         const myArgs = {
             contractId: "CardPlastic",
             contractFunction: 'createPlastic',
