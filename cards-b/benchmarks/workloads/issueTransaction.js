@@ -58,7 +58,7 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
      * @return {Promise<TxStatus[]>}
      */
     async submitTransaction() {
-        
+
 
         const request = this.CardIssueRequest.create({});
 
