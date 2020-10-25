@@ -55,6 +55,10 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
         this.contractVersion = args.contractVersion;
 
         this.creditCards = Array(10).fill().map(_ => faker.finance.creditCardNumber())
+
+        for (const plasticId in this.creditCards) {
+            await this.createPlastic(plasticId)
+        }
     }
 
     /**
@@ -64,21 +68,21 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
     async submitTransaction() {
         /*
         * message CardTransactionRequest {
-  string authTransactionType = 1;
-  string plasticId = 2;
-  int64 accountId = 3;
-  string merchantName = 6;
-  string merchantCity = 7;
-  string issuerAmount = 8;
-  string acquirerAmount = 9;
-  string iofAmount = 10;
-  string transactionProcessingType = 11;
-  bool national = 12;
-  string lastDigits = 13;
-  string issuerCurrencyCode = 14;
-  string acquirerCurrencyCode = 15;
-  PosEntryMode posEntryMode = 16;
-}
+              string authTransactionType = 1;
+              string plasticId = 2;
+              int64 accountId = 3;
+              string merchantName = 6;
+              string merchantCity = 7;
+              string issuerAmount = 8;
+              string acquirerAmount = 9;
+              string iofAmount = 10;
+              string transactionProcessingType = 11;
+              bool national = 12;
+              string lastDigits = 13;
+              string issuerCurrencyCode = 14;
+              string acquirerCurrencyCode = 15;
+              PosEntryMode posEntryMode = 16;
+            }
         * */
 
         const amount = faker.finance.amount()
@@ -104,7 +108,7 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
 
         const myArgs = {
             contractId: this.contractId,
-            contractFunction: 'issueTransaction',
+            contractFunction: "issueTransaction",
             contractArguments: [base64.bytesToBase64(bytes)],
             readOnly: false
         };
@@ -135,14 +139,14 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
 
         const request = this.CreateCardPlastic.create({
             card: plastic,
-            id: ""
+            id: plasticId
         })
 
         const bytes = this.CreateCardPlastic.encode(request)
 
         const myArgs = {
             contractId: "CardPlastic",
-            contractFunction: 'createPlastic',
+            contractFunction: "createPlastic",
             contractArguments: [base64.bytesToBase64(bytes)],
             readOnly: false
         };
