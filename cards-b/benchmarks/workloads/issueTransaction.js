@@ -34,6 +34,7 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
         this.protobuf = loadSync("../proto/cards-contract.proto")
         this.CardIssueRequest = this.protobuf.lookupType("org.dangerousplay.hyperledger.CardTransactionRequest")
         this.CreateCardPlastic = this.protobuf.lookupType("org.dangerousplay.hyperledger.CreatePlasticRequest")
+        this.CardPlastic = this.protobuf.lookupType("org.dangerousplay.hyperledger.CardPlastic")
     }
 
     /**
@@ -127,9 +128,14 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
         }
         * */
 
-        const request = this.CreateCardPlastic.create({
+        const plastic = this.CardPlastic.create({
             accountNumber: faker.finance.account(),
-            embossingName: faker.name
+            embossingName: faker.name.findName(),
+        })
+
+        const request = this.CreateCardPlastic.create({
+            card: plastic,
+            id: ""
         })
 
         const bytes = this.CreateCardPlastic.encode(request)
