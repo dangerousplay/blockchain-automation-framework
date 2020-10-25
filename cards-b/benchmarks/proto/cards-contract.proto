@@ -99,5 +99,5 @@ message CardTransactionRequest {
   string lastDigits = 13;
   string issuerCurrencyCode = 14;
   string acquirerCurrencyCode = 15;
-  PosEntryMode posEntryModeEnum = 16;
+  PosEntryMode posEntryMode = 16;
 }

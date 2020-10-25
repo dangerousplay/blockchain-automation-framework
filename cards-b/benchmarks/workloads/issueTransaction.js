@@ -16,6 +16,7 @@
 
 const { WorkloadModuleBase } = require('@hyperledger/caliper-core');
 const { loadSync } = require('protobufjs');
+const base64 = require("byte-base64");
 
 /**
  * Workload module for the benchmark round.
@@ -56,14 +57,17 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
      * @return {Promise<TxStatus[]>}
      */
     async submitTransaction() {
-        const request = new this.CardIssueRequest();
+        const request = this.CardIssueRequest.create({});
+
+        const bytes = this.CardIssueRequest.encode(request).finish();
 
         const myArgs = {
             contractId: this.contractId,
             contractFunction: 'issueTransaction',
-            contractArguments: ["aaa"],
+            contractArguments: [base64.bytesToBase64(bytes)],
             readOnly: false
         };
+
         return this.sutAdapter.sendRequests(myArgs);
     }
 }
