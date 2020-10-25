@@ -58,7 +58,24 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
      * @return {Promise<TxStatus[]>}
      */
     async submitTransaction() {
-
+        /*
+        * message CardTransactionRequest {
+  string authTransactionType = 1;
+  string plasticId = 2;
+  int64 accountId = 3;
+  string merchantName = 6;
+  string merchantCity = 7;
+  string issuerAmount = 8;
+  string acquirerAmount = 9;
+  string iofAmount = 10;
+  string transactionProcessingType = 11;
+  bool national = 12;
+  string lastDigits = 13;
+  string issuerCurrencyCode = 14;
+  string acquirerCurrencyCode = 15;
+  PosEntryMode posEntryMode = 16;
+}
+        * */
 
         const request = this.CardIssueRequest.create({});
 
