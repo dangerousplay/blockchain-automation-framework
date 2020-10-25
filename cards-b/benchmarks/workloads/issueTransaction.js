@@ -30,6 +30,7 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
         this.contractId = '';
         this.contractVersion = '';
         this.protobuf = loadSync("../proto/cards-contract.proto")
+        this.CardIssueRequest = this.protobuf.lookupType("org.dangerousplay.hyperledger.CardTransactionRequest")
     }
 
     /**
@@ -55,6 +56,8 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
      * @return {Promise<TxStatus[]>}
      */
     async submitTransaction() {
+        const request = new this.CardIssueRequest();
+
         const myArgs = {
             contractId: this.contractId,
             contractFunction: 'issueTransaction',
