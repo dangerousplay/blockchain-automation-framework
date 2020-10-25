@@ -33,6 +33,7 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
         this.contractVersion = '';
         this.protobuf = loadSync("../proto/cards-contract.proto")
         this.CardIssueRequest = this.protobuf.lookupType("org.dangerousplay.hyperledger.CardTransactionRequest")
+        this.CreateCardPlastic = this.protobuf.lookupType("org.dangerousplay.hyperledger.CreatePlasticRequest")
     }
 
     /**
@@ -51,6 +52,8 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
         const args = this.roundArguments;
         this.contractId = args.contractId;
         this.contractVersion = args.contractVersion;
+
+        this.creditCards = Array(10).fill().map(_ => faker.finance.creditCardNumber())
     }
 
     /**
@@ -78,10 +81,11 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
         * */
 
         const amount = faker.finance.amount()
+        const plasticId = faker.random.arrayElement(this.creditCards)
 
         const request = this.CardIssueRequest.create({
             authTransactionType: "",
-            plasticId: "",
+            plasticId: plasticId,
             accountId: faker.finance.account(),
             merchantName: faker.company.companyName(),
             merchantCity: faker.address.city(),
@@ -90,7 +94,7 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
             iofAmount: "",
             transactionProcessingType: "",
             national: true,
-            lastDigits: faker.finance.creditCardNumber(),
+            lastDigits: plasticId,
             issuerCurrencyCode: faker.finance.currencyCode(),
             acquirerCurrencyCode: faker.finance.currencyCode()
         });
@@ -100,6 +104,32 @@ class IssueTransactionWorkload extends WorkloadModuleBase {
         const myArgs = {
             contractId: this.contractId,
             contractFunction: 'issueTransaction',
+            contractArguments: [base64.bytesToBase64(bytes)],
+            readOnly: false
+        };
+
+        return this.sutAdapter.sendRequests(myArgs);
+    }
+
+    async createPlastic(plasticId) {
+        /*
+        * message CardPlastic {
+          string accountNumber = 1;
+          string embossingName = 2;
+          int64 productId = 3;
+          string productName = 4;
+          PlasticMode plasticMode = 5;
+          string lastDigitsPan = 6;
+          string recipientName = 7;
+          Address deliveryAddress = 8;
+          bool virtual = 9;
+          string orderId = 10;
+        }
+        * */
+
+        const myArgs = {
+            contractId: "CardPlastic",
+            contractFunction: 'createPlastic',
             contractArguments: [base64.bytesToBase64(bytes)],
             readOnly: false
         };
