@@ -151,7 +151,7 @@ spec:
 
           cp -R /tmp/chaincode/{{ $.Values.chaincode.repository.path }}/* /tmp/chaincode-build/
 
-          sh -c /tmp/chaincode-build/gradlew installDist
+          /tmp/chaincode-build/gradlew installDist
 
           peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -l ${CHAINCODE_TECHNOLOGY} -p /tmp/chaincode-build/build/install/chaincode
         env:
