@@ -151,11 +151,11 @@ spec:
 
           cp -R /tmp/chaincode/{{ $.Values.chaincode.repository.path }}/* /tmp/chaincode-build/
 
-          cd /tmp/chaincode-build/
+          chmod +x /tmp/chaincode-build/gradlew
 
-          ./gradlew installDist
+          sh -c /tmp/chaincode-build/gradlew installDist
 
-          cd ./build/install/chaincode && peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -l ${CHAINCODE_TECHNOLOGY} -p .
+          peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -l ${CHAINCODE_TECHNOLOGY} -p /tmp/chaincode-build/build/install/chaincode
         env:
         - name: CORE_VM_ENDPOINT
           value: unix:///host/var/run/docker.sock
