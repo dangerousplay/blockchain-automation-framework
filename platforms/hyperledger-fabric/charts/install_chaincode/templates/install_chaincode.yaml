@@ -155,6 +155,8 @@ spec:
 
           ./gradlew installDist
 
+          cd ./build/install/chaincode
+
           peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -l ${CHAINCODE_TECHNOLOGY} -p .
         env:
         - name: CORE_VM_ENDPOINT
