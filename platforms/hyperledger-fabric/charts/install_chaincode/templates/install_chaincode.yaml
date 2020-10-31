@@ -147,9 +147,15 @@ spec:
 
           mkdir -p $GOPATH/src/github.com/chaincode/
 
+          mkdir /tmp/chaincode-build/
+
           cp -R /tmp/chaincode/{{ $.Values.chaincode.repository.path }}/* /tmp/chaincode-build/
 
-          cd /tmp/chaincode-build/ && peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -l ${CHAINCODE_TECHNOLOGY} -p .
+          cd /tmp/chaincode-build/
+
+          ./gradlew installDist
+
+          peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -l ${CHAINCODE_TECHNOLOGY} -p .
         env:
         - name: CORE_VM_ENDPOINT
           value: unix:///host/var/run/docker.sock
