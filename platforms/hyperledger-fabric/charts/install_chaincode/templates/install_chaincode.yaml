@@ -145,7 +145,7 @@ spec:
           git_password=$(cat /opt/gopath/src/github.com/hyperledger/fabric/crypto/user_cred)
           cd /tmp && git clone https://{{ $.Values.chaincode.repository.git_username }}:$git_password@{{ $.Values.chaincode.repository.url }} -b {{ $.Values.chaincode.repository.branch }} chaincode-build
 
-          cd ./chaincode-build && ./gradlew installDist
+          cd ./chaincode-build/{{ $.Values.chaincode.repository.path }} && ./gradlew installDist
 
           peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -l ${CHAINCODE_TECHNOLOGY} -p ./build/install/chaincode
         env:
