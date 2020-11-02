@@ -147,7 +147,11 @@ spec:
 
           cd ./chaincode-build/{{ $.Values.chaincode.repository.path }} && ./gradlew installDist
 
-          peer chaincode package ${CHAINCODE_NAME}.tar.gz --path ./build/install/chaincode --lang ${CHAINCODE_TECHNOLOGY} --label ${CHAINCODE_NAME}_${CHAINCODE_VERSION}
+          echo "executing peer chaincode package ${CHAINCODE_NAME}.tar.gz --path ./build/install/chaincode --lang ${CHAINCODE_TECHNOLOGY}"
+
+          peer chaincode package ${CHAINCODE_NAME}.tar.gz --path ./build/install/chaincode --lang ${CHAINCODE_TECHNOLOGY}
+
+          echo "executing peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -l ${CHAINCODE_TECHNOLOGY} ${CHAINCODE_NAME}.tar.gz"
 
           peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -l ${CHAINCODE_TECHNOLOGY} ${CHAINCODE_NAME}.tar.gz
         env:
