@@ -145,13 +145,11 @@ spec:
           git_password=$(cat /opt/gopath/src/github.com/hyperledger/fabric/crypto/user_cred)
           cd /tmp && git clone https://{{ $.Values.chaincode.repository.git_username }}:$git_password@{{ $.Values.chaincode.repository.url }} -b {{ $.Values.chaincode.repository.branch }} chaincode-build
 
-          cd ./chaincode-build/{{ $.Values.chaincode.repository.path }}
+          cd ./chaincode-build/{{ $.Values.chaincode.repository.path }} && ./gradlew installDist
 
-          mkdir -p /tmp/package
+          peer chaincode package ${CHAINCODE_NAME}.tar.gz --path ./build/install/chaincode --lang ${CHAINCODE_TECHNOLOGY} --label ${CHAINCODE_NAME}_${CHAINCODE_VERSION}
 
-          cp -R . /tmp/package
-
-          peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -l ${CHAINCODE_TECHNOLOGY} -p /tmp/package
+          peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -l ${CHAINCODE_TECHNOLOGY} ${CHAINCODE_NAME}.tar.gz
         env:
         - name: CORE_VM_ENDPOINT
           value: unix:///host/var/run/docker.sock
