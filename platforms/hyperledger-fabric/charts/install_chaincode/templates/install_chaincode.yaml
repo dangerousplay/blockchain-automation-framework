@@ -147,7 +147,11 @@ spec:
 
           cd ./chaincode-build/{{ $.Values.chaincode.repository.path }} && ./gradlew build shadowjar
 
-          peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -l ${CHAINCODE_TECHNOLOGY} -p ./{{ $.Values.chaincode.repository.path }}
+          mkdir -p /tmp/package
+
+          cp ./build/libs/chaincode.jar /tmp/package
+
+          peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -l ${CHAINCODE_TECHNOLOGY} -p /tmp/package
         env:
         - name: CORE_VM_ENDPOINT
           value: unix:///host/var/run/docker.sock
